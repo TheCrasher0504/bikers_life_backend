@@ -10,10 +10,10 @@ app.use(express.json());
 
 // Token Endpoint
 app.post('/getToken', async (req, res) => {
-  const { roomName, uuid, name } = req.body;
+  const { roomName, identity, name } = req.body;
 
-  if (!roomName || !uuid) {
-    return res.status(400).json({ error: 'roomName, uuid required' });
+  if (!roomName || !identity) {
+    return res.status(400).json({ error: 'roomName and identity required' });
   }
 
 const apiKey = process.env.LIVEKIT_API_KEY;
@@ -29,14 +29,15 @@ if (!apiKey || !apiSecret) {
     apiKey,
     apiSecret,
     {
-      identity: uuid, // Deine UUID oder Name
-      name: name,     // Anzeigename
+      identity: identity, // Deine UUID oder Name
+      name: name || identity,     // Anzeigename
     }
   );
 
   // Rechte vergeben
   at.addGrant({
     roomJoin: true,
+    roomAdmin: true,
     room: roomName,
     canPublish: true,
     canSubscribe: true,
@@ -45,7 +46,7 @@ if (!apiKey || !apiSecret) {
 
   const token = await at.toJwt();
   
-  console.log(`Token erstellt für User ${participantName} in Raum ${roomName}`);
+  console.log(`Token erstellt für User ${ownName}, UUID: ${uuid} in Raum ${roomName}`);
   console.log(`Token: ${token}`);
   res.json({ token });
 });
