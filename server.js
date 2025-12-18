@@ -16,10 +16,18 @@ app.post('/getToken', async (req, res) => {
     return res.status(400).json({ error: 'roomName and participantName required' });
   }
 
+const apiKey = process.env.LIVEKIT_API_KEY;
+const apiSecret = process.env.LIVEKIT_API_SECRET;
+
+if (!apiKey || !apiSecret) {
+  console.error("FEHLER: LIVEKIT_API_KEY oder SECRET sind nicht gesetzt!");
+  process.exit(1); // Stoppt den Server, falls die Keys fehlen
+}
+
   // Erstelle das Token
   const at = new AccessToken(
-    process.env.LIVEKIT_API_KEY,
-    process.env.LIVEKIT_API_SECRET,
+    apiKey,
+    apiSecret,
     {
       identity: participantName, // Deine UUID oder Name
       name: participantName,     // Anzeigename
@@ -37,6 +45,7 @@ app.post('/getToken', async (req, res) => {
   const token = await at.toJwt();
   
   console.log(`Token erstellt für User ${participantName} in Raum ${roomName}`);
+  console.log(`Token: ${token}`);
   res.json({ token });
 });
 
