@@ -10,10 +10,10 @@ app.use(express.json());
 
 // Token Endpoint
 app.post('/getToken', async (req, res) => {
-  const { roomName, participantName } = req.body;
+  const { roomName, uuid, name } = req.body;
 
-  if (!roomName || !participantName) {
-    return res.status(400).json({ error: 'roomName and participantName required' });
+  if (!roomName || !uuid) {
+    return res.status(400).json({ error: 'roomName, uuid required' });
   }
 
 const apiKey = process.env.LIVEKIT_API_KEY;
@@ -29,8 +29,8 @@ if (!apiKey || !apiSecret) {
     apiKey,
     apiSecret,
     {
-      identity: participantName, // Deine UUID oder Name
-      name: participantName,     // Anzeigename
+      identity: uuid, // Deine UUID oder Name
+      name: name,     // Anzeigename
     }
   );
 
@@ -40,6 +40,7 @@ if (!apiKey || !apiSecret) {
     room: roomName,
     canPublish: true,
     canSubscribe: true,
+    CanUpdateOwnMetadata: true,
   });
 
   const token = await at.toJwt();
