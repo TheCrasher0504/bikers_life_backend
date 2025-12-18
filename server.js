@@ -40,6 +40,10 @@ app.post('/getToken', async (req, res) => {
   res.json({ token });
 });
 
+app.get('/status', (req, res) => {
+  res.send({ status: 'Token Server läuft' });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
