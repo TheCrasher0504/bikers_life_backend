@@ -24,6 +24,14 @@ app.post('/getToken', async (req, res) => {
     return res.status(500).json({ error: 'Server misconfiguration' });
   }
 
+  const room = await db.rooms.findOne({ code: roomName });
+
+  if (!room || room.ended) {
+    return res.status(404).json({
+      error: "ROOM_NOT_FOUND",
+    });
+  }
+
   const at = new AccessToken(
     apiKey,
     apiSecret,
@@ -57,4 +65,5 @@ app.get('/status', (req, res) => {
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
+
 });
