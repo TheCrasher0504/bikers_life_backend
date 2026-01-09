@@ -85,7 +85,7 @@ app.post('/getCreateToken', async (req, res) => {
   at.addGrant({
     roomJoin: true,
     roomAdmin: true,
-    room: room.roomName ?? roomName, 
+    room: roomName, 
     canPublish: true,
     canSubscribe: true,
     canUpdateOwnMetadata: true, // WICHTIG: Kleines 'c' am Anfang!
@@ -108,5 +108,6 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
