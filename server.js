@@ -72,16 +72,6 @@ app.post('/getCreateToken', async (req, res) => {
       return res.status(500).json({ error: 'Server misconfiguration' });
     }
 
-    const roomService = new RoomServiceClient(livekitHost, apiKey, apiSecret);
-
-    
-    try {
-      await roomService.createRoom({ name: roomName });
-    } catch (err) {
-      // falls schon existiert o.ä.
-      console.log("createRoom:", String(err));
-    }
-
   const at = new AccessToken(
     apiKey,
     apiSecret,
@@ -113,6 +103,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
