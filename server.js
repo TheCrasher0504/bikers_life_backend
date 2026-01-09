@@ -53,7 +53,7 @@ app.post('/getJoinToken', async (req, res) => {
   });
 
   const token = await at.toJwt();  
-  console.log(Token erstellt für User ${name || identity}, UUID: ${identity} in Raum ${roomName}); 
+  console.log(Token erstellt für User ${name || identity}), UUID: ${identity} in Raum ${roomName}); 
   res.json({ token });
 });
 
@@ -102,7 +102,7 @@ app.post('/getCreateToken', async (req, res) => {
   });
 
   const token = await at.toJwt();  
-  console.log(Token erstellt für User ${name || identity}, UUID: ${identity} in Raum ${roomName}); 
+  console.log(Token erstellt für User ${name || identity}), UUID: ${identity} in Raum ${roomName}); 
   res.json({ token });
 });
 
@@ -115,6 +115,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
