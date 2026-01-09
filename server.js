@@ -20,6 +20,10 @@ app.post('/getJoinToken', async (req, res) => {
   const apiSecret = process.env.LIVEKIT_API_SECRET;
   const livekitHost = process.env.LIVEKIT_HOST;
 
+  console.log("KEY set?", !!process.env.LIVEKIT_API_KEY);
+  console.log("SECRET set?", !!process.env.LIVEKIT_API_SECRET);
+  console.log("HOST:", process.env.LIVEKIT_HOST);
+
   if (!apiKey || !apiSecret || !livekitHost) {
       console.error("FEHLER: LIVEKIT_HOST / KEY / SECRET fehlen!");
       return res.status(500).json({ error: 'Server misconfiguration' });
@@ -102,6 +106,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
