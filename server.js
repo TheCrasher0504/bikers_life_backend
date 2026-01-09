@@ -52,13 +52,9 @@ app.post('/getJoinToken', async (req, res) => {
     canUpdateOwnMetadata: true, // WICHTIG: Kleines 'c' am Anfang!
   });
 
-  const token = at.toJwt();
-    console.log(`JoinToken erstellt: user=${name || identity} room=${roomName}`);
-    return res.json({ token });
-  } catch (e) {
-    console.error("getJoinToken ERROR:", e);
-    return res.status(500).json({ error: "INTERNAL_ERROR", details: String(e) });
-  }
+  const token = await at.toJwt();  
+  console.log(Token erstellt für User ${name || identity}, UUID: ${identity} in Raum ${roomName}); 
+  res.json({ token });
 });
 
 app.post('/getCreateToken', async (req, res) => {
@@ -105,13 +101,9 @@ app.post('/getCreateToken', async (req, res) => {
     canUpdateOwnMetadata: true, // WICHTIG: Kleines 'c' am Anfang!
   });
 
-  const token = at.toJwt();
-    console.log(`CreateToken erstellt: user=${name || identity} room=${roomName}`);
-    return res.json({ token });
-  } catch (e) {
-    console.error("getCreateToken ERROR:", e);
-    return res.status(500).json({ error: "INTERNAL_ERROR", details: String(e) });
-  }
+  const token = await at.toJwt();  
+  console.log(Token erstellt für User ${name || identity}, UUID: ${identity} in Raum ${roomName}); 
+  res.json({ token });
 });
 
 app.get('/status', (req, res) => {
@@ -123,6 +115,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
