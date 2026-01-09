@@ -24,7 +24,7 @@ app.post('/getJoinToken', async (req, res) => {
     return res.status(500).json({ error: 'Server misconfiguration' });
   }
 
-  const room = await db.rooms.findOne({ code: roomName });
+  const room = await rooms.findOne({ code: roomName });
 
   if (!room || room.ended) {
     return res.status(404).json({
@@ -108,6 +108,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
