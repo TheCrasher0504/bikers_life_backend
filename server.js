@@ -105,12 +105,13 @@ app.post('/getCreateToken', async (req, res) => {
     canUpdateOwnMetadata: true, // WICHTIG: Kleines 'c' am Anfang!
   });
 
-  const token = await at.toJwt();
-  
-  // KORRIGIERTE LOG-ZEILE:
-  console.log(`Token erstellt für User ${name || identity}, UUID: ${identity} in Raum ${roomName}`);
-  
-  res.json({ token });
+  const token = at.toJwt();
+    console.log(`CreateToken erstellt: user=${name || identity} room=${roomName}`);
+    return res.json({ token });
+  } catch (e) {
+    console.error("getCreateToken ERROR:", e);
+    return res.status(500).json({ error: "INTERNAL_ERROR", details: String(e) });
+  }
 });
 
 app.get('/status', (req, res) => {
@@ -122,6 +123,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
