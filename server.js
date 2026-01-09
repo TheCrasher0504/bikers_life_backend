@@ -65,10 +65,9 @@ app.post('/getCreateToken', async (req, res) => {
 
   const apiKey = process.env.LIVEKIT_API_KEY;
     const apiSecret = process.env.LIVEKIT_API_SECRET;
-    const livekitHost = process.env.LIVEKIT_HOST;
 
-    if (!apiKey || !apiSecret || !livekitHost) {
-      console.error("FEHLER: LIVEKIT_HOST / KEY / SECRET fehlen!");
+    if (!apiKey || !apiSecret) {
+      console.error("FEHLER: KEY / SECRET fehlen!");
       return res.status(500).json({ error: 'Server misconfiguration' });
     }
 
@@ -103,6 +102,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
