@@ -64,8 +64,9 @@ app.post('/getJoinToken', async (req, res) => {
   res.json({ token });
 });
 
-app.get('/roomExists', async (req, res) => {
-  const { roomName } = req.query;
+app.post('/roomExists', async (req, res) => {
+  const { roomName } = req.body;
+  
 
   if (!roomName) {
     return res.status(400).json({ error: 'roomName required' });
