@@ -92,11 +92,11 @@ app.get('/roomExists', async (req, res) => {
   }
 });
 
-app.post('/getCreateToken', async (req, res) => {
-  const { roomName, identity, name } = req.body;
+app.post('/createRoom', async (req, res) => {
+  const { roomName } = req.body;
 
-  if (!roomName || !identity) {
-    return res.status(400).json({ error: 'roomName and identity required' });
+  if (!roomName) {
+    return res.status(400).json({ error: 'roomName required' });
   }
 
   const apiKey = process.env.LIVEKIT_API_KEY;
@@ -115,28 +115,7 @@ app.post('/getCreateToken', async (req, res) => {
   } catch (err) {  
     console.log("createRoom:", String(err));
   }
-
-  const at = new AccessToken(
-    apiKey,
-    apiSecret,
-    {
-      identity: identity,
-      name: name || identity,
-    }
-  );
-
-  at.addGrant({
-    roomJoin: true,
-    roomAdmin: true,
-    room: roomName, 
-    canPublish: true,
-    canSubscribe: true,
-    canUpdateOwnMetadata: true, // WICHTIG: Kleines 'c' am Anfang!
-  });
-
-  const token = await at.toJwt();  
-  res.json({ token });
-});
+}
 
 app.get('/status', (req, res) => {
   res.send({ status: 'Token Server läuft' });
@@ -147,6 +126,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
