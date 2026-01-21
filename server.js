@@ -121,10 +121,26 @@ app.post('/createRoom', async (req, res) => {
   const roomService = new RoomServiceClient(livekitHost, apiKey, apiSecret);
 
   try {
-    await roomService.createRoom({ name: roomName, emptyTimeout: 300 });
-  } catch (err) {  
-    console.log("createRoom:", String(err));
-  }
+  await roomService.createRoom({ 
+    name: roomName, 
+    emptyTimeout: 300 
+  });
+  
+  console.log(`Raum ${roomName} erstellt.`);
+
+  return res.status(200).json({ 
+    success: true, 
+    roomName: roomName
+  });
+
+} catch (err) {
+  console.log("createRoom Error:", String(err));
+  
+  return res.status(500).json({ 
+    success: false, 
+    error: 'Could not create room'
+  });
+}
 });
 
 app.get('/status', (req, res) => {
@@ -136,6 +152,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
