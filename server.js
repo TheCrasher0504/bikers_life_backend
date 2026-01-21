@@ -13,6 +13,16 @@ async function roomExists(roomService, roomName) {
   return rooms.some(r => r.name === roomName);
 }
 
+app.get('/wakeup', (req, res) => {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`[${timestamp}] Wake-up Call erhalten! Instanz wird aktiviert.`);
+  
+  res.status(200).send({
+    success: true,
+    message: "Server ist wach und bereit!",
+    time: timestamp
+  });
+});
 // Token Endpoint
 app.post('/getJoinToken', async (req, res) => {
   const { roomName, identity, name } = req.body;
@@ -126,6 +136,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
