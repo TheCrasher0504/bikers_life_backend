@@ -115,7 +115,7 @@ app.post('/createRoom', async (req, res) => {
   } catch (err) {  
     console.log("createRoom:", String(err));
   }
-}
+});
 
 app.get('/status', (req, res) => {
   res.send({ status: 'Token Server läuft' });
@@ -126,6 +126,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
