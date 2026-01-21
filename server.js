@@ -121,7 +121,7 @@ app.post('/createRoom', async (req, res) => {
   const roomService = new RoomServiceClient(livekitHost, apiKey, apiSecret);
 
   try {
-    await roomService.createRoom({ name: roomName });
+    await roomService.createRoom({ name: roomName, emptyTimeout: 300 });
   } catch (err) {  
     console.log("createRoom:", String(err));
   }
@@ -136,6 +136,7 @@ app.listen(PORT, () => {
   console.log(`Token Server läuft auf Port ${PORT}`);
 
 });
+
 
 
 
